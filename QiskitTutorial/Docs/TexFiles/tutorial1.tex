@@ -1,0 +1,63 @@
+
+\documentclass[a4paper,12pt]{article}
+\usepackage{enumitem} % -> Alphabetical Lists
+\usepackage{amsmath} % -> Matrices
+\usepackage{fullpage} % -> A4 Full Page
+\usepackage{amssymb} % -> Therefore
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{listings}
+\usepackage{braket}
+\usepackage{geometry}
+\usepackage{tikz}
+\usepackage{gensymb}
+
+\usetikzlibrary{quantikz}
+
+\graphicspath{ {./} }
+
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=20mm,
+}
+
+\title{Tutorial 1 Numerical Solution}
+\author{
+    Mustafa, Syed Husain
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+    \[\begin{quantikz}
+        \lstick{$q_{0}:\ket{0}$} & \gate{X}\slice{}  & \qw & \qw &\ctrl{1} &\gate{H}\slice{} &\qw &\meter{}\slice{} &\qw &\ctrl{2} &\qw \\
+        \lstick{$q_{1}:\ket{0}$} & \qw   &  \gate{H} & \ctrl{1} & \targ{} & \qw &\qw &\meter{} & \ctrl{1} &\qw &\qw\\
+        \lstick{$q_{2}:\ket{0}$} & \qw & \qw & \targ{} & \qw & \qw &\qw &\qw &\targ{} &\gate{Z} &\qw
+        \end{quantikz}\]
+    \[\ket{000} \xrightarrow{\text{$X \otimes I \otimes I$}}\ket{100}\xrightarrow{\text{$I \otimes  H \otimes I$}} \frac{1}{\sqrt{2}}\ket{1}\big(\ket{0}+\ket{1}\big)\ket{0}\]
+    \[\frac{\big(\ket{100}+\ket{110}\big)}{\sqrt{2}} \xrightarrow[]{\text{$I \otimes CNOT$}} \frac{\big(\ket{100}+\ket{111}\big)}{\sqrt{2}}\xrightarrow[]{\text{$CNOT\otimes I$}}\frac{\big(\ket{110}+\ket{101}\big)}{\sqrt{2}}\]
+    \[\frac{\big(\ket{110}+\ket{101}\big)}{\sqrt{2}} \xrightarrow[]{\text{$H\otimes I\otimes I$}}\frac{\big(\ket{0}-\ket{1}\big)}{\sqrt{2}}\frac{\ket{10}}{\sqrt{2}} +\frac{\big(\ket{0}-\ket{1}\big)}{\sqrt{2}}\frac{\ket{01}}{\sqrt{2}}\]
+    \[\frac{\ket{010}}{2} -\frac{\ket{110}}{2} +\frac{\ket{001}}{2}-\frac{\ket{101}}{2} \hspace{10mm}\textbf{(A)}\]
+    
+    \begin{center}
+        Measuring $q_{0}$ can lead to 0 or 1: \\
+    \end{center}
+    \hspace{25mm}\underline{Case $q_{0,0}$}: $\frac{\ket{010}}{2}+\frac{\ket{001}}{2}$ \hspace{50mm} \underline{Case $q_{0,1}$}:$-\frac{\ket{110}}{2} -\frac{\ket{101}}{2}$ \\~\\
+    \begin{center}
+        Proceeding with Case $q_{0,0}$ and performing measure on $q_{1}$: \\
+    \underline{Case $q_{1,0}$}:  $\frac{\ket{001}}{2} \xrightarrow[]{\text{$I \otimes CNOT$}} \frac{\ket{001}}{2} \xrightarrow[]{\text{$I \otimes I \otimes Z$}}
+    \frac{\ket{001}}{2}$ \\
+    \underline{Case $q_{1,1}$}: $\frac{\ket{010}}{2}\xrightarrow[]{\text{$I \otimes CNOT$}} \frac{\ket{011}}{2}\xrightarrow[]{\text{$I \otimes I \otimes Z$}} \frac{\ket{011}}{2}$ \\~\\
+    Proceeding with Case $q_{0,1}$ and performing measure on $q_{1}$: \\
+    \underline{Case $q_{1,0}$}: $-\frac{\ket{101}}{2}\xrightarrow[]{\text{$I \otimes CNOT$}} -\frac{\ket{101}}{2}\xrightarrow[]{\text{$I \otimes I \otimes Z$}} \frac{\ket{101}}{2}$ \\
+    \underline{Case $q_{1,1}$}: $\frac{\ket{110}}{2}\xrightarrow[]{\text{$I \otimes CNOT$}} \frac{\ket{111}}{2} \xrightarrow[]{\text{$I \otimes I \otimes Z$}}\frac{\ket{111}}{2}$
+    \end{center}
+
+    
+\end{document}
